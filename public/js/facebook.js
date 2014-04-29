@@ -46,7 +46,6 @@ function getMutualFriendList(person){
 function getFriendListAPI(person,method){
   var list = [];
   FB.api('/' + person + '/' + method, function(response) {
-    console.log("risposta arrivata")
     if(response.data) {
       response.data.forEach(function(friend) {
         list.push({'name':friend.name, 'id:':friend.id});
@@ -64,7 +63,6 @@ function addMyFriends(){
         list.push({'name':friend.name, 'id':friend.id});
       });
       graph["me"] = list;
-      console.log("aggiunti i miei amici")
       addFriendsOfMyFriends(list);
     } 
   });
@@ -72,9 +70,8 @@ function addMyFriends(){
 
 function addFriendsOfMyFriends(friends){
   friends.forEach(function(friend, index){
-    console.log("richiedo gli amici di " + friend.name);
     apiCaller_count++;
-    FB.api('/' + friend.id + '/' + "mutualfriends", function(response) {
+    FB.api('/' + friend.id + '/' + "friends", function(response) {
       apiCaller_count--;
       if(response.data) {
         console.log("amici di " + friend.name + " arrivati");
@@ -83,20 +80,21 @@ function addFriendsOfMyFriends(friends){
           list.push({'name':friend.name, 'id':friend.id});
         });
         graph[friend.id] = list;
-        console.log("aggiunti gli amici di " + friend.name);
         checkToDraw(friends.length,index);
-      // } else if (response.error) {
-      //     FB.api('/' + friend.id + '/' + "mutualfriends", function(response) {
-      //       if(response.data) {
-      //         var list = [];
-      //         response.data.forEach(function(friend) {
-      //           list.push({'name':friend.name, 'id:':friend.id});
-      //         });
-      //         graph[friend.id] = list;
-      //         console.log("aggiunti gli amici in comune con " + friend.name);
-      //         checkToDraw(friends.length,index);
-      //       } 
-      //     });
+      } else if (response.error) {
+        apiCaller_count++;
+        FB.api('/' + friend.id + '/' + "mutualfriends", function(response) {
+          apiCaller_count--;
+          if(response.data) {
+            console.log("amici in comune con " + friend.name + " arrivati");
+            var list = [];
+            response.data.forEach(function(friend) {
+              list.push({'name':friend.name, 'id':friend.id});
+            });
+            graph[friend.id] = list;
+            checkToDraw(friends.length,index);
+          }
+        });
       }
     });
   });
@@ -112,7 +110,6 @@ function createGraph(){
 //     drawGraph();
 // }
 function checkToDraw(){
-  console.log("apiCaller_count=" + apiCaller_count);
   if (apiCaller_count === 0)
     drawGraph();
 }
@@ -120,7 +117,6 @@ function checkToDraw(){
 function drawGraph(){
   
   document.getElementById("facebook-friends").innerHTML = graphToString();
-  console.log(graph);
 }
 
 function graphToString(){
