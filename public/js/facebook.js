@@ -6,6 +6,7 @@ window.fbAsyncInit = function() {
     status     : true,
     xfbml      : true
   });
+  showButtonIfIsLogged();
 };
 
 (function(d, s, id){
@@ -18,21 +19,34 @@ window.fbAsyncInit = function() {
 
 /**  **/
 
-var graph = {}
+var FBgraph = {}
 var apiCaller_count = 0;
 
-function login(){ 
+function FB_login(){ 
   FB.login(function(response) {
     if (response.authResponse)
-      createGraph;
+      console.log('login');
     else            
       console.log('Authorization failed.');
+    showButton();
   },{scope: 'email'});
 }
 
-function logout(){  
+function showButton(){
+  document.getElementById("logout_button").style.display='block';
+  document.getElementById("createGraph_button").style.display='block';
+}
+
+function FB_logout(){  
   console.log("logout");
   FB.logout(function(){document.location.reload();});
+}
+
+function showButtonIfIsLogged(){
+  FB.getLoginStatus(function(response) {
+  if (response.status === 'connected' || response.status === 'not_authorized') 
+    showButton();
+ });
 }
 
 function getFriendList(person){
@@ -62,7 +76,7 @@ function addMyFriends(){
       response.data.forEach(function(friend) {
         list.push({'name':friend.name, 'id':friend.id});
       });
-      graph["me"] = list;
+      FBgraph["me"] = list;
       addFriendsOfMyFriends(list);
     } 
   });
@@ -79,7 +93,7 @@ function addFriendsOfMyFriends(friends){
         response.data.forEach(function(friend) {
           list.push({'name':friend.name, 'id':friend.id});
         });
-        graph[friend.id] = list;
+        FBgraph[friend.id] = list;
         checkToDraw(friends.length,index);
       } else if (response.error) {
         apiCaller_count++;
@@ -91,7 +105,7 @@ function addFriendsOfMyFriends(friends){
             response.data.forEach(function(friend) {
               list.push({'name':friend.name, 'id':friend.id});
             });
-            graph[friend.id] = list;
+            FBgraph[friend.id] = list;
             checkToDraw(friends.length,index);
           }
         });
@@ -112,13 +126,14 @@ function checkToDraw(){
 function drawGraph(){
   
   document.getElementById("facebook-friends").innerHTML = graphToString();
+  renderGraph();
 }
 
 function graphToString(){
   var out = "{ <br/>";
-  Object.keys(graph).forEach(function(friend_id){
+  Object.keys(FBgraph).forEach(function(friend_id){
     out += getFriendName(friend_id) + ": [ ";
-    graph[friend_id].forEach(function (friend_obj){
+    FBgraph[friend_id].forEach(function (friend_obj){
       out += getFriendName(friend_obj.id) + " - ";
     });
     out += "];<br/>";
@@ -127,7 +142,7 @@ function graphToString(){
 }
 
 function getFriendName(id){
-  var friends = graph["me"];
+  var friends = FBgraph["me"];
   for (var i=0; i<friends.length; i++){
     var friend = friends[i];
     if (friend.id === id)
