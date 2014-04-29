@@ -18,7 +18,7 @@
 
 function getUserFriendList(){
 	out = "";
-    FB.api('/me/friends', function(response) {
+   FB.api('/me/friends', function(response) {
         if(response.data) {
             $.each(response.data,function(index,friend) {
                 out += (friend.name + ' has id:' + friend.id) + "\n";
@@ -26,7 +26,9 @@ function getUserFriendList(){
         } else {
             return "Error!";
         }
+        
     });
+    return out;
 }
 
 
