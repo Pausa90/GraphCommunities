@@ -104,11 +104,6 @@ function createGraph(){
   addMyFriends();
 }
 
-// function checkToDraw(size, index){
-//   console.log(size-1 + " === " + index);
-//   if (size-1 === index)
-//     drawGraph();
-// }
 function checkToDraw(){
   if (apiCaller_count === 0)
     drawGraph();
@@ -122,9 +117,9 @@ function drawGraph(){
 function graphToString(){
   var out = "{ <br/>";
   Object.keys(graph).forEach(function(friend_id){
-    out += getFriendName(friend_id) + ": [\t";
+    out += getFriendName(friend_id) + ": [ ";
     graph[friend_id].forEach(function (friend_obj){
-      out += getFriendName(friend_obj.id) + "\t";
+      out += getFriendName(friend_obj.id) + " - ";
     });
     out += "];<br/>";
   });
