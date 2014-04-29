@@ -1,15 +1,19 @@
-<!DOCTYPE>
-<head>
-	<meta charset="UTF-8">
-	<title>Home Page</title>
+	<!DOCTYPE>
+	<head>
+		<meta charset="UTF-8">
+		<title>Home Page</title>
+	</head>
+	<body>
 
-</head>
-<body>
-  
-  <div id="fb-root"></div>
-	
-  <div id="myfriends"></div>
-	
-	
-  <script type="text/javascript" src="/js/facebook.js"></script>
-</body>
+		<div id="communitiesBar">
+			<img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" width="200" style="cursor:pointer;" onclick="login()"/>
+			<button onclick="logout()">Logout</button> 
+		</nav>
+	  
+	  	<div id="fb-root"></div>
+		
+	  	<script type="text/javascript" src="/js/facebook.js"></script>
+	  
+	  	<button onclick="createGraph()">createGraph</button>
+		<div id="facebook-friends"></div>
+	</body>
