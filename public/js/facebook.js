@@ -17,31 +17,34 @@ window.fbAsyncInit = function() {
  fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk')); 
 
-/**  **/
+/** Variabili Globali **/
 
 var FBgraph = {}
 var apiCaller_count = 0;
 
+//Funzione che effettua il login e mostra i pulsanti una volta effettuato
 function FB_login(){ 
   FB.login(function(response) {
-    if (response.authResponse)
-      console.log('login');
+    if (response.authResponse){
+      showButton();
+    }
     else            
-      console.log('Authorization failed.');
-    showButton();
+      console.log('Authorization failed.');    
   },{scope: 'email'});
 }
 
+//Preleva i pulsanti dall'html e li rende visibili
 function showButton(){
   document.getElementById("logout_button").style.display='block';
   document.getElementById("createGraph_button").style.display='block';
 }
 
+//FUnzione che permette il logout
 function FB_logout(){  
-  console.log("logout");
   FB.logout(function(){document.location.reload();});
 }
 
+//Controlla se si è loggati al caricamento ed in caso positivo mostra i pulsanti
 function showButtonIfIsLogged(){
   FB.getLoginStatus(function(response) {
   if (response.status === 'connected' || response.status === 'not_authorized') 
@@ -49,25 +52,25 @@ function showButtonIfIsLogged(){
  });
 }
 
-function getFriendList(person){
-  return getFriendListAPI(person, "friends");
-}
-
-function getMutualFriendList(person){
-  return getFriendListAPI(person, "mutualfriends");
-}
-
-function getFriendListAPI(person,method){
-  var list = [];
-  FB.api('/' + person + '/' + method, function(response) {
-    if(response.data) {
-      response.data.forEach(function(friend) {
-        list.push({'name':friend.name, 'id:':friend.id});
-      });
-    } 
-  });
-  return list;
-}
+/**Possono essere utili, ma non sono usate
+* function getFriendList(person){
+*   return getFriendListAPI(person, "friends");
+** }
+** function getMutualFriendList(person){
+**   return getFriendListAPI(person, "mutualfriends");
+** }
+** function getFriendListAPI(person,method){
+**   var list = [];
+**   FB.api('/' + person + '/' + method, function(response) {
+**     if(response.data) {
+**       response.data.forEach(function(friend) {
+**         list.push({'name':friend.name, 'id:':friend.id});
+**       });
+**     } 
+**   });
+**   return list;
+** }
+**/
 
 function addMyFriends(){
   var list = [];
@@ -132,20 +135,20 @@ function drawGraph(){
 function graphToString(){
   var out = "{ <br/>";
   Object.keys(FBgraph).forEach(function(friend_id){
-    out += getFriendName(friend_id) + ": [ ";
+    out += getFriendName("me", friend_id) + ": [ ";
     FBgraph[friend_id].forEach(function (friend_obj){
-      out += getFriendName(friend_obj.id) + " - ";
+      out += getFriendName(friend_id, friend_obj.id) + " - ";
     });
     out += "];<br/>";
   });
   return out + "}";
 }
 
-function getFriendName(id){
-  var friends = FBgraph["me"];
+function getFriendName(id_list, id_toFound){
+  var friends = FBgraph[id_list];
   for (var i=0; i<friends.length; i++){
     var friend = friends[i];
-    if (friend.id === id)
+    if (friend.id === id_toFound)
       return friend.name;
   }
 }
