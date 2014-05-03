@@ -135,11 +135,13 @@ function drawGraph(){
 function graphToString(){
   var out = "{ <br/>";
   Object.keys(FBgraph).forEach(function(friend_id){
-    out += getFriendName("me", friend_id) + ": [ ";
-    FBgraph[friend_id].forEach(function (friend_obj){
-      out += getFriendName(friend_id, friend_obj.id) + " - ";
-    });
-    out += "];<br/>";
+    if (friend_id != "me"){
+      out += getFriendName("me", friend_id) + ": [ ";
+      FBgraph[friend_id].forEach(function (friend_obj){
+        out += getFriendName(friend_id, friend_obj.id) + " - ";
+      });
+      out += "];<br/>";
+    }
   });
   return out + "}";
 }
