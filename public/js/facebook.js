@@ -17,6 +17,8 @@ window.fbAsyncInit = function() {
  fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk')); 
 
+
+
 /** Variabili Globali **/
 
 var FBgraph = {}
@@ -35,7 +37,8 @@ function FB_login(){
 
 //Preleva i pulsanti dall'html e li rende visibili
 function showButton(){
-  document.getElementById("logout_button").style.display='block';
+  document.getElementById("facebook_login_button").style.display='none';
+  document.getElementById("facebook_logout_button").style.display='block';
   document.getElementById("createGraph_button").style.display='block';
 }
 
