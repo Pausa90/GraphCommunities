@@ -12,7 +12,7 @@
 /** Variabili Globali **/
 
 var Ggraph = {}
-var apiCaller_count = 0;7
+var apiCaller_count = 0;
 var access_token;
 
 function GAPI_load(){
@@ -85,18 +85,29 @@ function addMyFriends(){
   });
 }
 
-function addFriendsOfMyFriends(list){
-  var list = [];
-  var request = gapi.client.plus.people.list({ 'userId':'117246951523158448063', 'collection':'visible' });
-  request.execute(function(resp){
-    resp['items'].forEach(function(friend){
-      list.push({'name':friend.displayName, 'id':friend.id});
-    });
-    Ggraph['117246951523158448063'] = list;
-    drawGraph();
-  });
-  
+function addFriendsOfMyFriends(friends){
+  friends.forEach(function(friend, index){
+    apiCaller_count++;
+    var request = gapi.client.plus.people.list({ 'userId':friend.id, 'collection':'visible' });
+    request.execute(function(resp){
+      apiCaller_count--;
+      var list = [];
+      if (resp['items'])
+        resp['items'].forEach(function(friend){
+          list.push({'name':friend.displayName, 'id':friend.id});
+        });
+      Ggraph[friend.id] = list;
+      checkToDraw(friends.length,index);
+    });  
+  });  
 }
+
+function checkToDraw(){
+  console.log(apiCaller_count);
+  if (apiCaller_count === 0)
+    drawGraph();
+}
+
 
 function drawGraph(){  
   document.getElementById("g+-friends").innerHTML = graphToString();
@@ -116,8 +127,9 @@ function graphToString(){
     Ggraph[friend_id].forEach(function (friend_obj){
       out += "(" + friend_obj.name + " - " + friend_obj.id + ") - ";
     });
+    out += " ]</br>"
   });
-  return out + "\n}";
+  return out + "</br>}";
 }
 
 // function getFriendName(id_list, id_toFound){
