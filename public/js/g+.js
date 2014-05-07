@@ -77,23 +77,25 @@ function addMyFriends(){
   var request = gapi.client.plus.people.list({ 'userId':'me', 'collection':'visible' });
   request.execute(function(resp){
     resp['items'].forEach(function(friend){
-      list.push({'name':friend.displayName, 'id':friend.id});
+      list.push({'name':friend.displayName, 'id':friend.id, 'url':friend.url});
     });
     Ggraph['me'] = list;
-    drawGraph();
+    addFriendsOfMyFriends(list);
+    // drawGraph();
   });
 }
 
 function addFriendsOfMyFriends(list){
-  // var list = [];
-  // var request = gapi.client.plus.people.list({ 'userId':'117246951523158448063', 'collection':'visible' });
-  // request.execute(function(resp){
-  //   resp['items'].forEach(function(friend){
-  //     list.push({'name':friend.displayName, 'id':friend.id});
-  //   });
-  //   Ggraph['117246951523158448063'] = list;
+  var list = [];
+  var request = gapi.client.plus.people.list({ 'userId':'117246951523158448063', 'collection':'visible' });
+  request.execute(function(resp){
+    resp['items'].forEach(function(friend){
+      list.push({'name':friend.displayName, 'id':friend.id});
+    });
+    Ggraph['117246951523158448063'] = list;
     drawGraph();
-  // });
+  });
+  
 }
 
 function drawGraph(){  
@@ -115,7 +117,7 @@ function graphToString(){
       out += "(" + friend_obj.name + " - " + friend_obj.id + ") - ";
     });
   });
-  return out + "}";
+  return out + "\n}";
 }
 
 // function getFriendName(id_list, id_toFound){
