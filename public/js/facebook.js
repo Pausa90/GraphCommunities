@@ -39,7 +39,7 @@ function FB_login(){
 function showButton(){
   document.getElementById("facebook_login_button").style.display='none';
   document.getElementById("facebook_logout_button").style.display='block';
-  document.getElementById("createGraph_button").style.display='block';
+  document.getElementById("createFBGraph_button").style.display='block';
 }
 
 //FUnzione che permette il logout
@@ -120,7 +120,7 @@ function addFriendsOfMyFriends(friends){
   });
 }
 
-function createGraph(){
+function createFBGraph(){
   addMyFriends();
 }
 
