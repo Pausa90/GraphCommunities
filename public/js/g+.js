@@ -80,8 +80,9 @@ function addMyGFriends(){
       list.push({'name':friend.displayName, 'id':friend.id, 'url':friend.url});
     });
     Ggraph['me'] = list;
-    addGFriendsOfMyFriends(list);
+    //addGFriendsOfMyFriends(list);
     // drawGraph();
+    getValeriosFriends();
   });
 }
 
@@ -99,9 +100,24 @@ function addGFriendsOfMyFriends(friends){
       else
         console.log(resp['message'])
       Ggraph[friend.id] = list;
-      checkToDrawG(friends.length,index);
+      checkToDrawG();
     });  
   });  
+}
+
+function getValeriosFriends(){
+  idValerio=117246951523158448063;
+  var request = gapi.client.plus.people.list({ 'userId':idValerio, 'collection':'visible' });
+  request.execute(function(resp){
+    if (resp['items'])
+      resp['items'].forEach(function(friend){
+          list.push({'name':friend.displayName, 'id':friend.id});
+        });
+    else
+      list.push('Non funziona, errore: ' + resp['message']);
+    Ggraph[friend.id] = list;
+    checkToDrawG();
+  });
 }
 
 function checkToDrawG(){

@@ -9,17 +9,21 @@
 		<script src="/js/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/facebook.js"></script>
 	  	<script type="text/javascript" src="/js/g+.js"></script>
+	  	<script type="text/javascript" src="/js/twitter.js"></script>
 	  	<script type="text/javascript" src="/js/render.js"></script>
 	</head>
 	<body>
 		<script src="http://d3js.org/d3.v3.min.js"></script>
 		
+		
 		<div id="communitiesBar">
+			<!-- Pulsanti Facebook -->
 			<button id="facebook_login_button" class="btn btn-social-icon btn-lg btn-facebook" onclick="FB_login()">
 				<i class="fa fa-facebook"></i>
 			</button>
 			<button id="facebook_logout_button" style="display:none" onclick="FB_logout()">FB Logout</button> 
 			
+			<!-- Pulsanti Google -->
 			<button id="google_logout_button" style="display:none" onclick="G_logout()">G Logout</button> 
 			<span id="google_login_button">
 			  <span
@@ -32,6 +36,12 @@
 			  </span>
 			</span>
 			<button id="google_logout_button" style="display:none" onclick="G_logout()">G Logout</button> 
+		
+			<!-- Pulsanti Twitter -->
+			<button id="twitter_login_button" class="btn btn-social-icon btn-lg btn-twitter" onclick="Tw_login()">
+				<i class="fa fa-twitter"></i>
+			</button>
+			<button id="twitter_logout_button" style="display:none" onclick="Tw_logout()">FB Logout</button> 
 		</nav>
 	  
 	  	<div id="fb-root"></div>
@@ -40,6 +50,8 @@
 	  
 	  	<button id="createFBGraph_button" style="display:none" onclick="createFBGraph()" hidden="true">createFBGraph</button>
 	  	<button id="createGGraph_button" style="display:none" onclick="createGGraph()" hidden="true">createG+Graph</button>
+	  	<button id="createTwGraph_button" style="display:none" onclick="createTwGraph()" hidden="true">createTwGraph</button>
 		<div id="facebook-friends"></div>
 		<div id="g+-friends"></div>
+		<div id="tw-friends"></div>
 	</body>
