@@ -25,7 +25,7 @@ function G_login(authResult){
     // Autorizzazione riuscita
     // Nascondi il pulsante di accesso ora che l'utente è autorizzato. Ad esempio: 
     access_token = authResult['access_token'];
-    showButton();
+    showGButton();
     GAPI_load();
   } else if (authResult['error']) {
     // Si è verificato un errore.
@@ -36,7 +36,7 @@ function G_login(authResult){
   }
 }
 
-function showButton(){
+function showGButton(){
   document.getElementById("google_login_button").style.display='none';
   document.getElementById("google_logout_button").style.display='block';
   document.getElementById("createGGraph_button").style.display='block';
@@ -69,10 +69,10 @@ function G_logout(){
 
 
 function createGGraph(){
-  addMyFriends();
+  addMyGFriends();
 }
 
-function addMyFriends(){
+function addMyGFriends(){
   var list = [];
   var request = gapi.client.plus.people.list({ 'userId':'me', 'collection':'visible' });
   request.execute(function(resp){
@@ -80,12 +80,12 @@ function addMyFriends(){
       list.push({'name':friend.displayName, 'id':friend.id, 'url':friend.url});
     });
     Ggraph['me'] = list;
-    addFriendsOfMyFriends(list);
+    addGFriendsOfMyFriends(list);
     // drawGraph();
   });
 }
 
-function addFriendsOfMyFriends(friends){
+function addGFriendsOfMyFriends(friends){
   friends.forEach(function(friend, index){
     apiCaller_count++;
     var request = gapi.client.plus.people.list({ 'userId':friend.id, 'collection':'visible' });
@@ -96,24 +96,26 @@ function addFriendsOfMyFriends(friends){
         resp['items'].forEach(function(friend){
           list.push({'name':friend.displayName, 'id':friend.id});
         });
+      else
+        console.log(resp['message'])
       Ggraph[friend.id] = list;
-      checkToDraw(friends.length,index);
+      checkToDrawG(friends.length,index);
     });  
   });  
 }
 
-function checkToDraw(){
+function checkToDrawG(){
   console.log(apiCaller_count);
   if (apiCaller_count === 0)
-    drawGraph();
+    drawGGraph();
 }
 
 
-function drawGraph(){  
-  document.getElementById("g+-friends").innerHTML = graphToString();
+function drawGGraph(){  
+  document.getElementById("g+-friends").innerHTML = ggraphToString();
 }
 
-function graphToString(){
+function ggraphToString(){
   var out = "{ <br/>";
   Object.keys(Ggraph).forEach(function(friend_id){
     // if (friend_id != "me"){

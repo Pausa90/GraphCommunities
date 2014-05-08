@@ -6,7 +6,7 @@ window.fbAsyncInit = function() {
     status     : true,
     xfbml      : true
   });
-  showButtonIfIsLogged();
+  showFBButtonIfIsLogged();
 };
 
 (function(d, s, id){
@@ -28,7 +28,7 @@ var apiCaller_count = 0;
 function FB_login(){ 
   FB.login(function(response) {
     if (response.authResponse){
-      showButton();
+      showFBButton();
     }
     else            
       console.log('Authorization failed.');    
@@ -36,7 +36,7 @@ function FB_login(){
 }
 
 //Preleva i pulsanti dall'html e li rende visibili
-function showButton(){
+function showFBButton(){
   document.getElementById("facebook_login_button").style.display='none';
   document.getElementById("facebook_logout_button").style.display='block';
   document.getElementById("createFBGraph_button").style.display='block';
@@ -48,10 +48,10 @@ function FB_logout(){
 }
 
 //Controlla se si è loggati al caricamento ed in caso positivo mostra i pulsanti
-function showButtonIfIsLogged(){
+function showFBButtonIfIsLogged(){
   FB.getLoginStatus(function(response) {
   if (response.status === 'connected' || response.status === 'not_authorized') 
-    showButton();
+    showFBButton();
  });
 }
 
@@ -75,7 +75,7 @@ function showButtonIfIsLogged(){
 ** }
 **/
 
-function addMyFriends(){
+function addMyFBFriends(){
   var list = [];
   FB.api('/' + "me" + '/' + "friends", function(response) {
     if(response.data) {
@@ -83,12 +83,12 @@ function addMyFriends(){
         list.push({'name':friend.name, 'id':friend.id});
       });
       FBgraph["me"] = list;
-      addFriendsOfMyFriends(list);
+      addFBFriendsOfMyFriends(list);
     } 
   });
 }
 
-function addFriendsOfMyFriends(friends){
+function addFBFriendsOfMyFriends(friends){
   friends.forEach(function(friend, index){
     apiCaller_count++;
     FB.api('/' + friend.id + '/' + "friends", function(response) {
@@ -100,7 +100,7 @@ function addFriendsOfMyFriends(friends){
           list.push({'name':friend.name, 'id':friend.id});
         });
         FBgraph[friend.id] = list;
-        checkToDraw(friends.length,index);
+        checkToDrawFB(friends.length,index);
       } else if (response.error) {
         apiCaller_count++;
         FB.api('/' + friend.id + '/' + "mutualfriends", function(response) {
@@ -112,7 +112,7 @@ function addFriendsOfMyFriends(friends){
               list.push({'name':friend.name, 'id':friend.id});
             });
             FBgraph[friend.id] = list;
-            checkToDraw(friends.length,index);
+            checkToDrawFB(friends.length,index);
           }
         });
       }
@@ -121,21 +121,21 @@ function addFriendsOfMyFriends(friends){
 }
 
 function createFBGraph(){
-  addMyFriends();
+  addMyFBFriends();
 }
 
-function checkToDraw(){
+function checkToDrawFB(){
   if (apiCaller_count === 0)
-    drawGraph();
+    drawFBGraph();
 }
 
-function drawGraph(){
+function drawFBGraph(){
   
-  document.getElementById("facebook-friends").innerHTML = graphToString();
-  renderGraph();
+  document.getElementById("facebook-friends").innerHTML = fbgraphToString();
+  // renderGraph();
 }
 
-function graphToString(){
+function fbgraphToString(){
   var out = "{ <br/>";
   Object.keys(FBgraph).forEach(function(friend_id){
     if (friend_id != "me"){
