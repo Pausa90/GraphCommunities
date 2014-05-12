@@ -17,32 +17,34 @@
 		
 		
 		<div id="communitiesBar">
-			<!-- Pulsanti Facebook -->
-			<button id="facebook_login_button" class="btn btn-social-icon btn-lg btn-facebook" onclick="FB_login()">
-				<i class="fa fa-facebook"></i>
-			</button>
-			<button id="facebook_logout_button" style="display:none" onclick="FB_logout()">FB Logout</button> 
+			<nav>
+				<!-- Pulsanti Facebook -->
+				<button id="facebook_login_button" class="btn btn-social-icon btn-lg btn-facebook" onclick="FB_login()">
+					<i class="fa fa-facebook"></i>
+				</button>
+				<button id="facebook_logout_button" style="display:none" onclick="FB_logout()">FB Logout</button> 
+				
+				<!-- Pulsanti Google -->
+				<button id="google_logout_button" style="display:none" onclick="G_logout()">G Logout</button> 
+				<span id="google_login_button">
+				  <span
+				    class="g-signin"
+				    data-callback="G_login"
+				    data-clientid="85474813662.apps.googleusercontent.com"
+				    data-cookiepolicy="single_host_origin"
+				    data-requestvisibleactions="http://schemas.google.com/AddActivity"
+				    data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.circles.read https://www.googleapis.com/auth/plus.me">
+				  </span>
+				</span>
+				<button id="google_logout_button" style="display:none" onclick="G_logout()">G Logout</button> 
 			
-			<!-- Pulsanti Google -->
-			<button id="google_logout_button" style="display:none" onclick="G_logout()">G Logout</button> 
-			<span id="google_login_button">
-			  <span
-			    class="g-signin"
-			    data-callback="G_login"
-			    data-clientid="85474813662.apps.googleusercontent.com"
-			    data-cookiepolicy="single_host_origin"
-			    data-requestvisibleactions="http://schemas.google.com/AddActivity"
-			    data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.circles.read https://www.googleapis.com/auth/plus.me">
-			  </span>
-			</span>
-			<button id="google_logout_button" style="display:none" onclick="G_logout()">G Logout</button> 
-		
-			<!-- Pulsanti Twitter -->
-			<button id="twitter_login_button" class="btn btn-social-icon btn-lg btn-twitter" onclick="Tw_login()">
-				<i class="fa fa-twitter"></i>
-			</button>
-			<button id="twitter_logout_button" style="display:none" onclick="Tw_logout()">FB Logout</button> 
-		</nav>
+				<!-- Pulsanti Twitter -->
+				<button id="twitter_login_button" class="btn btn-social-icon btn-lg btn-twitter" onclick="Tw_login()">
+					<i class="fa fa-twitter"></i>
+				</button>
+				<button id="twitter_logout_button" style="display:none" onclick="Tw_logout()">FB Logout</button> 
+			</nav>
+		</div>
 	  
 	  	<div id="fb-root"></div>
 		
@@ -50,7 +52,7 @@
 	  
 	  	<button id="createFBGraph_button" style="display:none" onclick="createFBGraph()" hidden="true">createFBGraph</button>
 	  	<button id="createGGraph_button" style="display:none" onclick="createGGraph()" hidden="true">createG+Graph</button>
-	  	<button id="createTwGraph_button" style="display:none" onclick="createTwGraph()" hidden="true">createTwGraph</button>
+	  	<button id="createTwGraph_button" onclick="createTwGraph()">createTwGraph</button>
 		<div id="facebook-friends"></div>
 		<div id="g+-friends"></div>
 		<div id="tw-friends"></div>

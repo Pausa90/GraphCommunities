@@ -12,7 +12,7 @@
 /** Variabili Globali **/
 
 var Ggraph = {}
-var apiCaller_count = 0;
+var GapiCaller_count = 0;
 var access_token;
 
 function GAPI_load(){
@@ -88,10 +88,10 @@ function addMyGFriends(){
 
 function addGFriendsOfMyFriends(friends){
   friends.forEach(function(friend, index){
-    apiCaller_count++;
+    GapiCaller_count++;
     var request = gapi.client.plus.people.list({ 'userId':friend.id, 'collection':'visible' });
     request.execute(function(resp){
-      apiCaller_count--;
+      GapiCaller_count--;
       var list = [];
       if (resp['items'])
         resp['items'].forEach(function(friend){
@@ -121,8 +121,8 @@ function getValeriosFriends(){
 }
 
 function checkToDrawG(){
-  console.log(apiCaller_count);
-  if (apiCaller_count === 0)
+  console.log(GapiCaller_count);
+  if (GapiCaller_count === 0)
     drawGGraph();
 }
 

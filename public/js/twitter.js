@@ -7,48 +7,54 @@ window.twttr = (function (d, s, id) {
   return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
 }(document, "script", "twitter-wjs"));
 
-// var OAuth2 = OAuth.OAuth2;    
-//  var twitterConsumerKey = 'jSdxNNIw0GPVkmqojIN59a5of';
-//  var twitterConsumerSecret = 'xIOwTrLfwBcXWasTPbhlvT5Pm2bzHWvXa9cYhTChmt6NbxGxH1';
-//  var oauth2 = new OAuth2(
-//    twitterconsumerKey,
-//    twitterConsumerSecret, 
-//    'https://api.twitter.com/', 
-//    null,
-//    'oauth2/token', 
-//    null);
-//  oauth2.getOAuthAccessToken(
-//    '',
-//    {'grant_type':'client_credentials'},
-//    function (e, access_token, refresh_token, results){
-//      console.log('bearer: ',access_token);
-//      oauth2.get('protected url', 
-//        access_token, function(e,data,res) {
-//          if (e) return callback(e, null);
-//          if (res.statusCode!=200) 
-//            return callback(new Error(
-//              'OAuth2 request failed: '+
-//              res.statusCode),null);
-//          try {
-//            data = JSON.parse(data);        
-//          }
-//          catch (e){
-//            return callback(e, null);
-//          }
-//          return callback(e, data);
-//       });
-//    });
-
 /** Variabili Globali **/
 
-function Tw_login(){
-	console.log("login di twitter da implementare");
-}
+var TGraph = [];
+var TapiCaller_count = 0;
 
 function Tw_login(){
+	$.get("/sessions/callback/", function(){
+        $.post("/getUser/", {'id':'51434415'}, function(valerio){
+            console.log(valerio);
+        })
+    })
+}
+
+function Tw_logout(){
 	console.log("logout di twitter da implementare");
 }
 
 function createTwGraph(){
-	console.log("grafo di twitter da implementare");
+	twitterQuery("https://api.twitter.com/1.1/friends/list.json", addMyTFriends)
+}
+
+function addMyTFriends(response){
+	var list = [];
+	if(response['user'])
+		response['users'].forEach(function(friend){
+			list.push({'name':friend.displayName, 'id':friend.id});
+		});
+	else
+		list.push("errore: " + response['error']);
+	TGraph['me'] = list;
+	drawTGraph();
+}
+
+function drawTGraph(){
+	twttr.widgets.load(newArticleElement);
+	document.body.replaceNode(newArticleElement, oldArticleElement);
+	console.log('disegnato?');
+}
+
+function twitterQuery(query, callback){
+	$.ajax({
+	    type: 'GET',
+	    url: query,
+	    contentType: "application/json",
+	    dataType: 'json',
+	    success: callback,
+	    error: function(e) {
+	      console.log('Errore nella query: ' + query + "errore: " + e);
+	    }
+	});
 }

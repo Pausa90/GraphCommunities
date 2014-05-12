@@ -22,7 +22,7 @@ window.fbAsyncInit = function() {
 /** Variabili Globali **/
 
 var FBgraph = {}
-var apiCaller_count = 0;
+var FBapiCaller_count = 0;
 
 //Funzione che effettua il login e mostra i pulsanti una volta effettuato
 function FB_login(){ 
@@ -90,9 +90,9 @@ function addMyFBFriends(){
 
 function addFBFriendsOfMyFriends(friends){
   friends.forEach(function(friend, index){
-    apiCaller_count++;
+    FBapiCaller_count++;
     FB.api('/' + friend.id + '/' + "friends", function(response) {
-      apiCaller_count--;
+      FBapiCaller_count--;
       if(response.data) {
         console.log("amici di " + friend.name + " arrivati");
         var list = [];
@@ -100,11 +100,11 @@ function addFBFriendsOfMyFriends(friends){
           list.push({'name':friend.name, 'id':friend.id});
         });
         FBgraph[friend.id] = list;
-        checkToDrawFB(friends.length,index);
+        checkToDrawFB();
       } else if (response.error) {
-        apiCaller_count++;
+        FBapiCaller_count++;
         FB.api('/' + friend.id + '/' + "mutualfriends", function(response) {
-          apiCaller_count--;
+          FBapiCaller_count--;
           if(response.data) {
             console.log("amici in comune con " + friend.name + " arrivati");
             var list = [];
@@ -112,7 +112,7 @@ function addFBFriendsOfMyFriends(friends){
               list.push({'name':friend.name, 'id':friend.id});
             });
             FBgraph[friend.id] = list;
-            checkToDrawFB(friends.length,index);
+            checkToDrawFB();
           }
         });
       }
@@ -125,7 +125,7 @@ function createFBGraph(){
 }
 
 function checkToDrawFB(){
-  if (apiCaller_count === 0)
+  if (FBapiCaller_count === 0)
     drawFBGraph();
 }
 
