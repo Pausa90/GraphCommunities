@@ -90,7 +90,19 @@ app.get('/sessions/callback', function(req, res){
   });
 });
 
+var https = require('https');
 
+app.get('/googlePlusFriendsOfFriends/', function(req, res, next){
+//GET https://www.googleapis.com/plus/v1/people/me/people/visible?key={YOUR_API_KEY}
+  var getString="www.googleapis.com/plus/v1/people/";
+  var idValerio="117246951523158448063";
+  var serverAPIKEY="AIzaSyDL9nOHwDF0F1lovx2MJ08Ge2kepQ9MVqY";
+  getString+=idValerio + "/people/visible?key=" + serverAPIKEY;
+
+  https.get(getString, function(res){
+    console.log(JSON.stringify(res));
+  });
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

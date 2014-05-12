@@ -106,22 +106,39 @@ function addGFriendsOfMyFriends(friends){
 }
 
 function getValeriosFriends(){
-  idValerio="117246951523158448063";
-  var list = [];
-  var request = gapi.client.plus.people.list({ 'userId':idValerio, 'collection':'visible' });
-  request.execute(function(resp){
-    if (resp['items'])
-      resp['items'].forEach(function(friend){
-          list.push({'name':friend.displayName, 'id':friend.id});
-        });
-    else{
-      list.push('Non funziona, errore: ' + resp['message']);
-      console.log("errore in getValeriosFriends");
-      console.log(resp);
-    }
-    Ggraph[idValerio] = list;
-    checkToDrawG();
-  });
+  // idValerio="117246951523158448063";
+  // var list = [];
+  // var request = gapi.client.plus.people.list({ 'userId':idValerio, 'collection':'visible' });
+  // request.execute(function(resp){
+  //   if (resp['items'])
+  //     resp['items'].forEach(function(friend){
+  //         list.push({'name':friend.displayName, 'id':friend.id});
+  //       });
+  //   else{
+  //     list.push('Non funziona, errore: ' + resp['message']);
+  //     console.log("errore in getValeriosFriends");
+  //     console.log(resp);
+  //   }
+  //   Ggraph[idValerio] = list;
+  //   checkToDrawG();
+  // });
+  $.ajax({
+      type: 'get',
+      url: 'https://www.googleapis.com/plus/v1/people/117246951523158448063/people/visible?key=AIzaSyCfDaNq9XEjfQicXZV02kzADOzpOics3xM',
+      crossDomain: true,
+      success: function (data) {
+        // use data
+        console.log("la get va");
+        console.log(JSON.stringify(data));
+        console.log(data);
+      }
+  })
+
+  // $.get("googlePlusFriendsOfFriends/", function(res){
+  //     console.log("la get va");
+  //     console.log(JSON.stringify(res));
+  //     console.log(res);
+  // })
 }
 
 function checkToDrawG(){
