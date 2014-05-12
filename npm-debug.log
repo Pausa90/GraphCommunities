@@ -1,5 +1,5 @@
 info it worked if it ends with ok
-verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'oauth' ]
+verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'passport' ]
 info using npm@1.1.4
 info using node@v0.6.19
 verbose config file /home/andrea/.npmrc
@@ -21,19 +21,17 @@ verbose caching /home/andrea/GraphCommunities/node_modules/hbs/package.json
 verbose loadDefaults hbs@2.6.0
 verbose from cache /home/andrea/GraphCommunities/package.json
 verbose readDependencies: using package.json deps
-verbose cache add [ 'oauth@*', null ]
-silly cache add: name, spec, args [ undefined, 'oauth@*', [ 'oauth@*', null ] ]
-verbose parsed url { pathname: 'oauth@*', path: 'oauth@*', href: 'oauth@*' }
-silly cache add: name, spec, args [ 'oauth', '*', [ 'oauth', '*' ] ]
-verbose parsed url { pathname: '*', path: '*', href: '*' }
-verbose addNamed [ 'oauth', '*' ]
+verbose cache add [ 'passport', null ]
+silly cache add: name, spec, args [ undefined, 'passport', [ 'passport', null ] ]
+verbose parsed url { pathname: 'passport', path: 'passport', href: 'passport' }
+verbose addNamed [ 'passport', '' ]
 verbose addNamed [ null, '' ]
-silly name, range, hasData [ 'oauth', '', false ]
-verbose raw, before any munging oauth
-verbose url resolving [ 'https://registry.npmjs.org/', './oauth' ]
-verbose url resolved https://registry.npmjs.org/oauth
-http GET https://registry.npmjs.org/oauth
-ERR! Error: failed to fetch from registry: oauth
+silly name, range, hasData [ 'passport', '', false ]
+verbose raw, before any munging passport
+verbose url resolving [ 'https://registry.npmjs.org/', './passport' ]
+verbose url resolved https://registry.npmjs.org/passport
+http GET https://registry.npmjs.org/passport
+ERR! Error: failed to fetch from registry: passport
 ERR!     at /usr/share/npm/lib/utils/npm-registry-client/get.js:139:12
 ERR!     at cb (/usr/share/npm/lib/utils/npm-registry-client/request.js:31:9)
 ERR!     at Request._callback (/usr/share/npm/lib/utils/npm-registry-client/request.js:136:18)
@@ -50,9 +48,9 @@ ERR! or use
 ERR!     reportbug --attach /home/andrea/GraphCommunities/npm-debug.log npm
 ERR! 
 ERR! System Linux 3.8.0-35-generic
-ERR! command "/usr/bin/nodejs" "/usr/bin/npm" "install" "oauth"
+ERR! command "/usr/bin/nodejs" "/usr/bin/npm" "install" "passport"
 ERR! cwd /home/andrea/GraphCommunities
 ERR! node -v v0.6.19
 ERR! npm -v 1.1.4
-ERR! message failed to fetch from registry: oauth
+ERR! message failed to fetch from registry: passport
 verbose exit [ 1, true ]

@@ -106,16 +106,20 @@ function addGFriendsOfMyFriends(friends){
 }
 
 function getValeriosFriends(){
-  idValerio=117246951523158448063;
+  idValerio="117246951523158448063";
+  var list = [];
   var request = gapi.client.plus.people.list({ 'userId':idValerio, 'collection':'visible' });
   request.execute(function(resp){
     if (resp['items'])
       resp['items'].forEach(function(friend){
           list.push({'name':friend.displayName, 'id':friend.id});
         });
-    else
+    else{
       list.push('Non funziona, errore: ' + resp['message']);
-    Ggraph[friend.id] = list;
+      console.log("errore in getValeriosFriends");
+      console.log(resp);
+    }
+    Ggraph[idValerio] = list;
     checkToDrawG();
   });
 }
@@ -129,6 +133,7 @@ function checkToDrawG(){
 
 function drawGGraph(){  
   document.getElementById("g+-friends").innerHTML = ggraphToString();
+  console.log(Ggraph);
 }
 
 function ggraphToString(){
