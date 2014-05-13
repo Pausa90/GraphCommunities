@@ -122,23 +122,23 @@ function getValeriosFriends(){
   //   Ggraph[idValerio] = list;
   //   checkToDrawG();
   // });
-  $.ajax({
-      type: 'get',
-      url: 'https://www.googleapis.com/plus/v1/people/117246951523158448063/people/visible?key=AIzaSyCfDaNq9XEjfQicXZV02kzADOzpOics3xM',
-      crossDomain: true,
-      success: function (data) {
-        // use data
-        console.log("la get va");
-        console.log(JSON.stringify(data));
-        console.log(data);
-      }
-  })
-
-  // $.get("googlePlusFriendsOfFriends/", function(res){
-  //     console.log("la get va");
-  //     console.log(JSON.stringify(res));
-  //     console.log(res);
+  // $.ajax({
+  //     type: 'GET',
+  //     url: 'https://www.googleapis.com/plus/v1/people/117246951523158448063/people/visible?key=AIzaSyCfDaNq9XEjfQicXZV02kzADOzpOics3xM',
+  //     crossDomain: true,
+  //     success: function (data) {
+  //       // use data
+  //       console.log("la get va");
+  //       console.log(JSON.stringify(data));
+  //       console.log(data);
+  //     }
   // })
+
+  $.get("googlePlusFriendsOfFriends/", function(res){
+      // console.log("la get va");
+      // console.log(JSON.stringify(res));
+      // console.log(res);
+  })
 }
 
 function checkToDrawG(){
